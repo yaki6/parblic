@@ -84,7 +84,11 @@
             </draggable>
           </v-col>
           <v-col cols="4">
-            我的Parblic：{{ parblicLink }}
+            我的Parblic：
+            <a :href="parblicLink" target="_blank">
+              {{ parblicLink }}
+            </a>
+
             <v-menu right>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn outlined v-bind="attrs" v-on="on"> 分享 </v-btn>
