@@ -11,6 +11,7 @@ export default {
     set_user(state, payload) {
       state.user = payload;
     },
+    placeholder() {},
   },
   getters: {
     isAuthenticated: (state) => {
@@ -42,7 +43,7 @@ export default {
         user
           .signUp()
           .then((resp) => {
-            commit('set_role', 'user');
+            commit('placeholder');
             resolve(resp);
           })
           .catch((err) => {
@@ -56,6 +57,11 @@ export default {
           .then((resp) => resolve(resp))
           .catch((err) => reject(err));
         commit('set_user', null);
+      });
+    },
+    updateInfo({ commit }, payload) {
+      return new Promise(() => {
+        commit('setInfo', payload);
       });
     },
   },

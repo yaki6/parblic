@@ -1,5 +1,11 @@
 <template>
   <div>
+    <v-app-bar app flat color="white">
+      <div class="text-h5">Parblic</div>
+      <v-spacer></v-spacer>
+      <v-btn text class="mr-2" to="/login">登录</v-btn>
+      <v-btn color="primary" class="ml-2" to="/register">免费注册</v-btn>
+    </v-app-bar>
     <div class="align-center" style="height: 500px">
       <v-container grid-list-xs fill-height fluid>
         <v-row>
@@ -21,7 +27,7 @@
             <br />
             <v-row class="justify-center align-center">
               <v-col cols="6" md="1" align="center">
-                <v-btn @click="register" color="primary lighten-1" x-large
+                <v-btn to="/register" color="primary lighten-1" x-large
                   >免费开始</v-btn
                 >
               </v-col>

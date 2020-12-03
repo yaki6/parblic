@@ -9,18 +9,6 @@
       <v-row align="center" justify="center">
         <v-col cols="12" sm="8" md="4">
           <v-card tile align="center">
-            <!-- <v-toolbar color="white" flat>
-              <v-layout row wrap align-center justify-center>
-                <v-img
-                  centered
-                  :src="
-                    require('../../../assets/img/header_logo.png')
-                  "
-                  max-height="100px"
-                  max-width="300px"
-                ></v-img>
-              </v-layout>
-              </v-toolbar>-->
             <v-card-title class="justify-center">加入Parblic</v-card-title>
             <v-card-text>
               <v-form ref="form" v-model="valid" lazy-validation>
@@ -131,17 +119,16 @@ export default {
     },
   },
   methods: {
-    register: function () {
+    register() {
       if (this.$refs.form.validate()) {
         this.loading = true;
-        let data = {
+        const data = {
           email: this.email,
           password: this.password,
         };
         this.$store
           .dispatch('base/register', data)
-          .then((resp) => {
-            console.log(resp);
+          .then(() => {
             this.msg = '注册成功，登录中';
             this.alert = true;
             this.type = 'secondary';
@@ -152,7 +139,7 @@ export default {
                   // this.$router.push('/welcome');
                 })
                 .catch((err) => {
-                  this.msg = err + '，请联系我们';
+                  this.msg = `${err}，请联系我们`;
                   this.alert = true;
                   this.type = 'error';
                 });
@@ -164,10 +151,9 @@ export default {
               this.alert = true;
               this.type = 'warning';
             } else {
-              this.msg = err + '，请联系我们';
+              this.msg = `${err}，请联系我们`;
               this.alert = true;
               this.type = 'error';
-              console.log(err);
             }
           });
       }
