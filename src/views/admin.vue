@@ -12,37 +12,97 @@
       </v-btn>
     </v-app-bar>
     <v-main>
+      <v-snackbar v-model="snackbar" :timeout="1500" top>
+        {{ msg }}
+      </v-snackbar>
       <v-container grid-list-xs>
+        <v-dialog v-model="qrDialog" width="500">
+          <v-card>
+            <v-card-title class="justify-center"> Parblic </v-card-title>
+
+            <v-card-text class="text-center">
+              {{ parblicLink }}
+              <br />
+              <vue-qrcode
+                :value="parblicLink"
+                :width="300"
+                :scale="5"
+                :margin="2"
+              />
+            </v-card-text>
+            <v-divider></v-divider>
+
+            <v-card-actions class="justify-center">
+              <v-btn color="primary" @click="download"> 下载图片 </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
         <v-row>
           <v-btn color="primary" block @click="add">新链接</v-btn>
         </v-row>
-        {{ links }}
         <v-row justify="center" class="mt-4">
-          <draggable tag="v-layout" v-model="links">
-            <template v-for="(item, i) in links">
-              <v-card width="500" class="ma-4" :key="i">
-                <v-card-text>
-                  <v-text-field
-                    dense
-                    prepend-icon="mdi-pencil"
-                    label="输入标题"
-                    v-model="item.title"
-                  ></v-text-field>
-                  <v-text-field
-                    dense
-                    prepend-icon="mdi-link-plus"
-                    label="输入链接"
-                    hint="http://url"
-                    v-model="item.link"
-                  ></v-text-field>
-                  <v-switch inset dense v-model="item.alive"></v-switch>
-                  <v-btn color="warning" @click="removeAt(i)" icon>
-                    <v-icon>mdi-delete</v-icon>
-                  </v-btn>
-                </v-card-text>
-              </v-card>
-            </template>
-          </draggable>
+          <v-col cols="8">
+            <draggable :list="links" handle=".handle">
+              <template v-for="(item, i) in links">
+                <v-card class="ma-4" :key="i">
+                  <v-card-text>
+                    <v-row>
+                      <v-col cols="1">
+                        <v-icon class="handle">mdi-menu</v-icon>
+                      </v-col>
+                      <v-col cols="11">
+                        <v-text-field
+                          dense
+                          prepend-icon="mdi-pencil"
+                          label="输入标题"
+                          v-model="item.title"
+                        ></v-text-field>
+                        <v-text-field
+                          dense
+                          prepend-icon="mdi-link-plus"
+                          label="输入链接"
+                          hint="http://url"
+                          v-model="item.link"
+                        ></v-text-field>
+                        <div class="d-flex justify-end align-center">
+                          <v-switch
+                            inset
+                            dense
+                            v-model="item.alive"
+                            color="success"
+                          ></v-switch>
+                          <v-btn @click="removeAt(i)" icon>
+                            <v-icon>mdi-delete</v-icon>
+                          </v-btn>
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </v-card-text>
+                </v-card>
+              </template>
+            </draggable>
+          </v-col>
+          <v-col cols="4">
+            我的Parblic：{{ parblicLink }}
+            <v-menu right>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn outlined v-bind="attrs" v-on="on"> 分享 </v-btn>
+              </template>
+              <v-list>
+                <v-list-item>
+                  <v-list-item-title @click="copy"
+                    >复制我的Parblic URL</v-list-item-title
+                  >
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-title @click="qrDialog = true"
+                    >下载我的Parblic二维码</v-list-item-title
+                  >
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </v-col>
         </v-row>
       </v-container>
     </v-main>
@@ -51,16 +111,22 @@
 
 <script>
 import draggable from 'vuedraggable';
+import VueQrcode from 'vue-qrcode';
 // import linkCard from '../components/linkCard';
 
 export default {
   components: {
     draggable,
+    VueQrcode,
     // linkCard,
   },
   name: 'admin',
   data() {
     return {
+      snackbar: false,
+      msg: '',
+      qrDialog: false,
+      userName: 'yaki',
       links: [
         {
           title: '知乎',
@@ -76,13 +142,52 @@ export default {
       urlRules: [(v) => !!v || '请输入链接'],
     };
   },
-  computed: {},
+  computed: {
+    parblicLink() {
+      return `https://www.parblic.com/${this.userName}`;
+    },
+  },
   methods: {
     add() {
-      this.links.push({ title: ' ', link: '' });
+      this.links.unshift({ title: ' ', link: '' });
     },
     removeAt(idx) {
       this.links.splice(idx, 1);
+    },
+    copy() {
+      const textArea = document.createElement('textarea');
+      textArea.value = this.parblicLink;
+      // Avoid scrolling to bottom
+      textArea.style.top = '0';
+      textArea.style.left = '0';
+      textArea.style.position = 'fixed';
+
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+
+      try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+          this.msg = '复制成功';
+          this.snackbar = true;
+        }
+      } catch (err) {
+        this.msg = err;
+        this.snackbar = true;
+      }
+      document.body.removeChild(textArea);
+    },
+    download() {
+      const imageSrc = document.getElementsByTagName('img')[0].currentSrc;
+      // const image = new Image();
+      // image.src = imageSrc;
+      console.log(imageSrc);
+      const anchor = document.createElement('a');
+      anchor.href = imageSrc;
+      anchor.target = '_blank';
+      anchor.download = 'parblic.png';
+      anchor.click();
     },
   },
 };
