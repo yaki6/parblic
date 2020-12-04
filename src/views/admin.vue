@@ -1,116 +1,103 @@
 <template>
-  <v-app>
-    <v-app-bar app>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+  <div>
+    <v-snackbar v-model="snackbar" :timeout="1500" top>
+      {{ msg }}
+    </v-snackbar>
+    <v-container grid-list-xs>
+      <v-dialog v-model="qrDialog" width="500">
+        <v-card>
+          <v-card-title class="justify-center"> Parblic </v-card-title>
 
-      <v-toolbar-title>Parblic</v-toolbar-title>
+          <v-card-text class="text-center">
+            {{ parblicLink }}
+            <br />
+            <vue-qrcode
+              :value="parblicLink"
+              :width="300"
+              :scale="5"
+              :margin="2"
+            />
+          </v-card-text>
+          <v-divider></v-divider>
 
-      <v-spacer></v-spacer>
+          <v-card-actions class="justify-center">
+            <v-btn color="primary" @click="download"> 下载图片 </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
-    </v-app-bar>
-    <v-main>
-      <v-snackbar v-model="snackbar" :timeout="1500" top>
-        {{ msg }}
-      </v-snackbar>
-      <v-container grid-list-xs>
-        <v-dialog v-model="qrDialog" width="500">
-          <v-card>
-            <v-card-title class="justify-center"> Parblic </v-card-title>
-
-            <v-card-text class="text-center">
-              {{ parblicLink }}
-              <br />
-              <vue-qrcode
-                :value="parblicLink"
-                :width="300"
-                :scale="5"
-                :margin="2"
-              />
-            </v-card-text>
-            <v-divider></v-divider>
-
-            <v-card-actions class="justify-center">
-              <v-btn color="primary" @click="download"> 下载图片 </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-
-        <v-row>
-          <v-btn color="primary" block @click="add">新链接</v-btn>
-        </v-row>
-        <v-row justify="center" class="mt-4">
-          <v-col cols="8">
-            <draggable :list="links" handle=".handle">
-              <template v-for="(item, i) in links">
-                <v-card class="ma-4" :key="i">
-                  <v-card-text>
-                    <v-row>
-                      <v-col cols="1">
-                        <v-icon class="handle">mdi-menu</v-icon>
-                      </v-col>
-                      <v-col cols="11">
-                        <v-text-field
+      <v-row>
+        <v-btn color="primary" block @click="add">新链接</v-btn>
+      </v-row>
+      <v-row justify="center" class="mt-4">
+        <v-col cols="8">
+          <draggable :list="links" handle=".handle">
+            <template v-for="(item, i) in links">
+              <v-card class="ma-4" :key="i">
+                <v-card-text>
+                  <v-row>
+                    <v-col cols="1">
+                      <v-icon class="handle">mdi-menu</v-icon>
+                    </v-col>
+                    <v-col cols="11">
+                      <v-text-field
+                        dense
+                        prepend-icon="mdi-pencil"
+                        label="输入标题"
+                        v-model="item.title"
+                      ></v-text-field>
+                      <v-text-field
+                        dense
+                        prepend-icon="mdi-link-plus"
+                        label="输入链接"
+                        hint="http://url"
+                        v-model="item.link"
+                      ></v-text-field>
+                      <div class="d-flex justify-end align-center">
+                        <v-switch
+                          inset
                           dense
-                          prepend-icon="mdi-pencil"
-                          label="输入标题"
-                          v-model="item.title"
-                        ></v-text-field>
-                        <v-text-field
-                          dense
-                          prepend-icon="mdi-link-plus"
-                          label="输入链接"
-                          hint="http://url"
-                          v-model="item.link"
-                        ></v-text-field>
-                        <div class="d-flex justify-end align-center">
-                          <v-switch
-                            inset
-                            dense
-                            v-model="item.alive"
-                            color="success"
-                          ></v-switch>
-                          <v-btn @click="removeAt(i)" icon>
-                            <v-icon>mdi-delete</v-icon>
-                          </v-btn>
-                        </div>
-                      </v-col>
-                    </v-row>
-                  </v-card-text>
-                </v-card>
-              </template>
-            </draggable>
-          </v-col>
-          <v-col cols="4">
-            我的Parblic：
-            <a :href="parblicLink" target="_blank">
-              {{ parblicLink }}
-            </a>
+                          v-model="item.alive"
+                          color="success"
+                        ></v-switch>
+                        <v-btn @click="removeAt(i)" icon>
+                          <v-icon>mdi-delete</v-icon>
+                        </v-btn>
+                      </div>
+                    </v-col>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </template>
+          </draggable>
+        </v-col>
+        <v-col cols="4">
+          我的Parblic：
+          <a :href="parblicLink" target="_blank">
+            {{ parblicLink }}
+          </a>
 
-            <v-menu right>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn outlined v-bind="attrs" v-on="on"> 分享 </v-btn>
-              </template>
-              <v-list>
-                <v-list-item>
-                  <v-list-item-title @click="copy"
-                    >复制我的Parblic URL</v-list-item-title
-                  >
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-title @click="qrDialog = true"
-                    >下载我的Parblic二维码</v-list-item-title
-                  >
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-main>
-  </v-app>
+          <v-menu right>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn outlined v-bind="attrs" v-on="on"> 分享 </v-btn>
+            </template>
+            <v-list>
+              <v-list-item>
+                <v-list-item-title @click="copy"
+                  >复制我的Parblic URL</v-list-item-title
+                >
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title @click="qrDialog = true"
+                  >下载我的Parblic二维码</v-list-item-title
+                >
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script>

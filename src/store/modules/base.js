@@ -3,13 +3,16 @@ import db from '@/plugins/leancloud';
 export default {
   namespaced: true,
   state: {
-    userId: '',
     msg: '',
     user: null,
+    drawer: true,
   },
   mutations: {
     set_user(state, payload) {
       state.user = payload;
+    },
+    toggleDrawer(state, payload) {
+      state.drawer = payload;
     },
     placeholder() {},
   },

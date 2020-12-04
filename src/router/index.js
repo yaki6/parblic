@@ -9,17 +9,13 @@ const routes = [
     name: 'Home',
     component: () => import(/* webpackChunkName: "Home" */ '../views/Home.vue'),
   },
-  {
-    path: '/:userName',
-    name: 'parblic',
-    props: true,
-    component: () => import(/* webpackChunkName: "Home" */ '../views/parblic.vue'),
-  },
+
   {
     path: '/test',
     name: 'test',
     component: () => import('../views/parblic.vue'),
   },
+
   {
     path: '/register',
     name: 'register',
@@ -39,14 +35,38 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
   {
-    path: '/admin',
+    path: '/admin/',
+    redirect: '/admin/links',
     name: 'admin',
-    component: () => import(/* webpackChunkName: "admin" */ '../views/admin.vue'),
+    component: () => import(/* webpackChunkName: "adminView" */ '../views/adminView.vue'),
+    children: [
+      {
+        path: 'links',
+        name: 'adminLinks',
+        component: () => import(/* webpackChunkName: "admin" */ '../views/admin.vue'),
+      },
+      {
+        path: 'account',
+        name: 'account',
+        component: () => import('../views/account.vue'),
+      },
+    ],
   },
   {
     path: '/Welcome',
     name: 'Welcome',
     component: () => import(/* webpackChunkName: "Welcome" */ '../views/Welcome.vue'),
+  },
+  {
+    path: '/:userName',
+    name: 'parblic',
+    props: true,
+    component: () => import(/* webpackChunkName: "Home" */ '../views/parblic.vue'),
+  },
+  {
+    path: '*',
+    name: 'notFound',
+    component: () => import('../views/NotFound.vue'),
   },
 ];
 
