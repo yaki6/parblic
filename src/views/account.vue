@@ -1,34 +1,42 @@
 <template>
   <v-card>
+    <v-snackbar v-model="snackbar" bottom :timeout="2000">
+      {{ msg }}
+    </v-snackbar>
     <v-card-text>
-      <v-card-text class="mb-0 pb-1">
-        {{ avatar }}
-        <v-avatar v-if="avatar != ''" size="130">
-          <v-img :src="avatar" class="align-center"></v-img>
-        </v-avatar>
-        <v-avatar v-else size="130">
-          <v-img
-            src="https://file.munshare.com/468c1828a0c637b75153.png/lingyanglogo.png"
-            class="align-end"
-          ></v-img>
-        </v-avatar>
-      </v-card-text>
-      <v-file-input
-        class="ml-13 pt-0 mt-0"
-        v-model="selectedAvatar"
-        prepend-icon="mdi-camera"
-        accept="image/*"
-        hide-input
-        :rules="avatarRules"
-      ></v-file-input>
-      <v-btn
-        small
-        color="primary"
-        class="pa-1 ml-8"
-        :loading="avatarUploading"
-        @click="onUploadAvatar()"
-        >保存头像</v-btn
-      >
+      <v-row class="d-flex justify-start">
+        <v-col class="12" md="2">
+          <v-avatar v-if="avatar != ''" size="130">
+            <v-img :src="avatar" class="align-center"></v-img>
+          </v-avatar>
+          <v-avatar v-else size="130">
+            <v-img
+              src="https://file.munshare.com/468c1828a0c637b75153.png/lingyanglogo.png"
+              class="align-end"
+            ></v-img>
+          </v-avatar>
+          <v-file-input
+            class="ml-13 pt-0 mt-0"
+            v-model="selectedAvatar"
+            prepend-icon="mdi-camera"
+            accept="image/*"
+            hide-input
+            :rules="avatarRules"
+          ></v-file-input>
+          <v-btn
+            small
+            color="primary"
+            class="pa-1 ml-8"
+            :loading="avatarUploading"
+            @click="onUploadAvatar()"
+            >保存头像</v-btn
+          >
+        </v-col>
+        <v-col class="12" md="10">
+          <p>用户名: {{ userName }}</p>
+          <p>邮箱: {{ email }}</p>
+        </v-col>
+      </v-row>
     </v-card-text>
   </v-card>
 </template>
@@ -36,9 +44,12 @@
 <script>
 export default {
   components: {},
-  name: 'admin',
+  name: 'account',
   data() {
     return {
+      snackbar: false,
+      msg: '',
+      avatar: '',
       selectedAvatar: null,
       avatarUploading: false,
       avatarRules: [
@@ -50,25 +61,18 @@ export default {
     selectedAvatar() {
       const file = this.selectedAvatar;
       const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
       fileReader.addEventListener('load', () => {
         this.avatar = fileReader.result; // 生成图片的base64 格式以预览
       });
-      fileReader.readAsDataURL(file);
     },
   },
   computed: {
-    avatar: {
-      get() {
-        return (
-          this.$store.state.base.user && this.$store.state.base.user.avatar
-        );
-      },
-      // set(val) {
-      //   this.avatar = val;
-      // },
-    },
     parblicLink() {
       return `https://www.parblic.com/${this.userName}`;
+    },
+    email() {
+      return this.$store.state.base.user.toJSON().email;
     },
   },
   methods: {
@@ -78,19 +82,23 @@ export default {
       this.$store
         .dispatch('base/updateAvatar', image)
         .then(() => {
-          console.log(image);
           this.avatarUploading = false;
-          this.$store.dispatch('base/fetchBasicInfo');
-          this.alert = true;
+          this.$store.dispatch('base/updateuser');
+          this.snackbar = true;
           this.msg = '头像更新成功';
-          this.$store.dispatch('base/fetchBasicInfo');
         })
         .catch((err) => {
           this.loadingAvatar = false;
-          this.alert = true;
+          this.snackbar = true;
           this.msg = `${err}请联系我们`;
         });
     },
+  },
+  created() {
+    const { avatar } = this.$store.state.base.user.toJSON();
+    if (avatar) {
+      this.avatar = avatar;
+    }
   },
 };
 </script>

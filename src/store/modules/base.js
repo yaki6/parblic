@@ -40,7 +40,6 @@ export default {
     register({ commit }, payload) {
       return new Promise((resolve, reject) => {
         const user = new db.User();
-        user.setUsername(payload.email);
         user.setEmail(payload.email);
         user.setPassword(payload.password);
         user
@@ -62,9 +61,11 @@ export default {
         commit('set_user', null);
       });
     },
-    updateInfo({ commit }, payload) {
+    updateUser({ state, commit }) {
       return new Promise(() => {
-        commit('setInfo', payload);
+        state.user.fetch().then((resp) => {
+          commit('setInfo', resp);
+        });
       });
     },
     async updateAvatar({ commit }, payload) {
