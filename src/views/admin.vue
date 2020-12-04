@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-snackbar v-model="snackbar" :timeout="1500" top>
+    <v-snackbar v-model="snackbar" :timeout="1500" bottom :color="color">
       {{ msg }}
     </v-snackbar>
     <v-container grid-list-xs>
@@ -31,7 +31,12 @@
       </v-row>
       <v-row justify="center" class="mt-4">
         <v-col cols="12" md="8">
-          <draggable :list="links" handle=".handle">
+          <draggable
+            :list="links"
+            handle=".handle"
+            @start="drag = true"
+            @end="drag = false"
+          >
             <template v-for="(item, i) in links">
               <v-card class="my-4" :key="i" height="180">
                 <v-card-text>
@@ -76,7 +81,6 @@
           <a :href="parblicLink" target="_blank">
             {{ parblicLink }}
           </a>
-
           <v-menu right>
             <template v-slot:activator="{ on, attrs }">
               <v-btn outlined v-bind="attrs" v-on="on"> 分享 </v-btn>
@@ -94,6 +98,8 @@
               </v-list-item>
             </v-list>
           </v-menu>
+          <br />
+          <v-btn class="my-4" color="primary" @click="save">保存</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -103,17 +109,20 @@
 <script>
 import draggable from 'vuedraggable';
 import VueQrcode from 'vue-qrcode';
-// import linkCard from '../components/linkCard';
+// import debounce from 'lodash/debounce';
+import db from '@/plugins/leancloud';
 
 export default {
   components: {
     draggable,
     VueQrcode,
-    // linkCard,
   },
   name: 'admin',
   data() {
     return {
+      drag: false,
+      color: 'secondary',
+      updating: false,
       snackbar: false,
       msg: '',
       qrDialog: false,
@@ -138,6 +147,11 @@ export default {
       return `https://www.parblic.com/${this.userName}`;
     },
   },
+  // watch: {
+  //   links(val) {
+  //     this.updateLinks(val);
+  //   },
+  // },
   methods: {
     add() {
       this.links.unshift({ title: ' ', link: '' });
@@ -145,6 +159,46 @@ export default {
     removeAt(idx) {
       this.links.splice(idx, 1);
     },
+    save() {
+      this.linkObj
+        .set('links', this.links)
+        .save()
+        .then(() => {
+          this.snackbar = true;
+          this.msg = '保存成功';
+          this.color = 'primary';
+        })
+        .catch((e) => {
+          this.snackbar = true;
+          this.msg = `${e}请联系我们`;
+          this.color = 'error';
+        });
+    },
+    // updateLinks: debounce(async function (value) {
+    //   if (!value) {
+    //     console.log('empty');
+    //   }
+    //   // Items have already been requested
+    //   if (this.updating) {
+    //     return;
+    //   }
+    //   this.updating = true;
+    //   // YOUR AJAX Methods go here
+    //   this.linkObj
+    //     .set('links', value)
+    //     .save()
+    //     .then((resp) => {
+    //       console.log(resp);
+    //       this.links = resp;
+    //       this.updating = false;
+    //     })
+    //     .catch(() => {
+    //       console.log('Unknown Error. Please check details and try again.');
+    //     })
+    //     .finally(() => {
+    //       this.updating = false;
+    //     });
+    // }, 5000),
     copy() {
       const textArea = document.createElement('textarea');
       textArea.value = this.parblicLink;
@@ -180,6 +234,35 @@ export default {
       anchor.download = 'parblic.png';
       anchor.click();
     },
+  },
+  created() {
+    const links = new db.Query('links');
+    links
+      .equalTo('dependent', db.User.current())
+      .find()
+      .then((resp) => {
+        console.log(resp);
+        if (resp.length === 0) {
+          const L = db.Object.extend('links');
+          const l = new L();
+          l.set('dependent', db.User.current());
+          const link = [
+            {
+              title: '',
+              link: 'http://url',
+              alive: false,
+            },
+          ];
+          this.links = link;
+          l.set('links', link);
+          l.save().then((r) => console.log(r));
+        } else {
+          const [linkObj] = resp;
+          console.log(linkObj);
+          this.linkObj = linkObj;
+          this.links = linkObj.toJSON().links;
+        }
+      });
   },
 };
 </script>
