@@ -71,8 +71,11 @@ export default {
     parblicLink() {
       return `https://www.parblic.com/${this.userName}`;
     },
+    userName() {
+      return this.$store.state.base.user.username;
+    },
     email() {
-      return this.$store.state.base.user.toJSON().email;
+      return this.$store.state.base.user.email;
     },
   },
   methods: {
@@ -95,7 +98,7 @@ export default {
     },
   },
   created() {
-    const { avatar } = this.$store.state.base.user.toJSON();
+    const { avatar } = this.$store.state.base.user;
     if (avatar) {
       this.avatar = avatar;
     }

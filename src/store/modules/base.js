@@ -40,6 +40,7 @@ export default {
     register({ commit }, payload) {
       return new Promise((resolve, reject) => {
         const user = new db.User();
+        user.setUsername(payload.username);
         user.setEmail(payload.email);
         user.setPassword(payload.password);
         user

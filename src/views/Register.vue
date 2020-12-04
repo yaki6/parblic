@@ -13,6 +13,13 @@
             <v-card-text>
               <v-form ref="form" v-model="valid" lazy-validation>
                 <v-text-field
+                  v-model="username"
+                  :rules="usernameRules"
+                  label="Parblic链接使用的用户名"
+                  prepend-inner-icon="mdi-email"
+                  required
+                ></v-text-field>
+                <v-text-field
                   v-model="email"
                   :rules="emailRules"
                   label="请输入邮箱"
@@ -58,7 +65,7 @@
                   class="mr-4"
                   @click.prevent="register"
                   :loading="loading"
-                  :disabled="loading"
+                  :disabled="loading || !valid"
                   >注册</v-btn
                 >
                 <v-container grid-list-xs>
@@ -93,6 +100,8 @@ export default {
       email: '',
       alert: false,
       msg: null,
+      username: '',
+      usernameRules: [(v) => !!v || '用户名为必填项'],
       emailRules: [
         (v) => !!v || '邮箱为必填项',
         (v) => /.+@.+\..+/.test(v) || '请输入合法的邮箱',
@@ -101,11 +110,11 @@ export default {
       passwordRules: [
         (v) => !!v || '密码是必填项',
         (v) => (v && v.length <= 16) || '密码长度必须不大于16位',
+        (v) => (v && v.length >= 6) || '密码必须大于6位',
       ],
       confirmPassword: '',
       confirmPasswordRules: [
         (v) => !!v || '请确认密码',
-        (v) => (v && v.length <= 16) || '密码长度必须不大于16位',
         (v) => v === this.password || '密码不一致',
       ],
     };
@@ -123,6 +132,7 @@ export default {
       if (this.$refs.form.validate()) {
         this.loading = true;
         const data = {
+          username: this.username,
           email: this.email,
           password: this.password,
         };
@@ -146,8 +156,13 @@ export default {
             }, 500);
           })
           .catch((err) => {
-            if (err.code === 202 || err.code === 203) {
-              this.msg = '用户已经注册，请登录';
+            console.log(err.code);
+            if (err.code === 202) {
+              this.msg = '用户名已被使用';
+              this.alert = true;
+              this.type = 'error';
+            } else if (err.code === 203) {
+              this.msg = '邮箱已经注册，请登录';
               this.alert = true;
               this.type = 'warning';
             } else {
@@ -155,6 +170,9 @@ export default {
               this.alert = true;
               this.type = 'error';
             }
+          })
+          .finally(() => {
+            this.loading = false;
           });
       }
     },
