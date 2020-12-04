@@ -4,6 +4,7 @@
       <v-app-bar-nav-icon icon @click="toggle"></v-app-bar-nav-icon>
       <v-toolbar-title to="/">Parblic</v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-btn color="primary" text @click="logout">退出登录</v-btn>
     </v-app-bar>
     <drawer></drawer>
     <v-main>
@@ -33,6 +34,11 @@ export default {
     toggle() {
       console.log(!this.drawer);
       this.toggleDrawer(!this.drawer);
+    },
+    logout() {
+      this.$store.dispatch('base/logout').then(() => {
+        this.$router.push('/');
+      });
     },
   },
 };

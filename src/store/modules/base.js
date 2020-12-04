@@ -67,5 +67,25 @@ export default {
         commit('setInfo', payload);
       });
     },
+    async updateAvatar({ commit }, payload) {
+      const avatar = new db.File('user_avatar', payload);
+      const file = await avatar.save();
+      if (file) {
+        const url = file.get('url');
+        const user = db.User.current();
+        const oldUrl = user.get('avatar');
+        try {
+          await user.set('avatar', url).save();
+          const query = new db.Query('_File');
+          console.log(oldUrl);
+          const oldFile = await query.equalTo('url', oldUrl).find();
+          console.log(oldFile);
+          await oldFile[0].destroy();
+          commit('SET_status', true);
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    },
   },
 };

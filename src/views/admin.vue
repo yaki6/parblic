@@ -30,10 +30,10 @@
         <v-btn color="primary" block @click="add">新链接</v-btn>
       </v-row>
       <v-row justify="center" class="mt-4">
-        <v-col cols="8">
+        <v-col cols="12" md="8">
           <draggable :list="links" handle=".handle">
             <template v-for="(item, i) in links">
-              <v-card class="ma-4" :key="i">
+              <v-card class="my-4" :key="i" height="180">
                 <v-card-text>
                   <v-row>
                     <v-col cols="1">
@@ -71,7 +71,7 @@
             </template>
           </draggable>
         </v-col>
-        <v-col cols="4">
+        <v-col cols="12" md="4" order="first">
           我的Parblic：
           <a :href="parblicLink" target="_blank">
             {{ parblicLink }}

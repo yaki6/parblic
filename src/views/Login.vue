@@ -95,18 +95,10 @@ export default {
         };
         this.loading = true;
         this.$store
-          .dispatch('base/userLogin', data)
+          .dispatch('base/login', data)
           .then(() => {
             this.loading = false;
-            if (this.$store.state.base.role === 'user') {
-              this.$router.push('/user/dashboard');
-            } else {
-              this.alert = true;
-              this.msg = '您注册的账户为组织账户，正在登录组织页面';
-              setTimeout(() => {
-                this.$router.push('/org/dashboard');
-              }, 5000);
-            }
+            this.$router.push('/admin');
           })
           .catch((err) => {
             this.loading = false;
