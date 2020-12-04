@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <app-bar></app-bar>
     <v-main>
       <v-container grid-list-xs>
         <v-row justify="center">
@@ -31,16 +30,16 @@
 </template>
 
 <script>
-import appBar from '../components/appBar.vue';
+// import appBar from '../components/appBar.vue';
 
 export default {
   components: {
-    appBar,
+    // appBar,
   },
+  props: ['userName'],
   name: 'admin',
   data() {
     return {
-      userName: 'yaki',
       links: [
         {
           title: '知乎',
@@ -62,9 +61,13 @@ export default {
     },
   },
   methods: {
-    open(link) {
-      console.log(link);
-      window.open(link, '_blank');
+    open(url) {
+      console.log(url);
+      let u = url;
+      if (!u.match(/^https?:\/\//i)) {
+        u = `http://${u}`;
+      }
+      window.open(u, '_blank');
     },
   },
 };
