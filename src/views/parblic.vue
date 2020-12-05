@@ -7,9 +7,7 @@
             <v-sheet height="168"> </v-sheet>
             <v-row justify="center">
               <v-avatar size="120">
-                <img
-                  src="https://file.munshare.com/468c1828a0c637b75153.png/lingyanglogo.png"
-                />
+                <img :src="avatar" />
               </v-avatar>
             </v-row>
             <v-row justify="center">
@@ -35,16 +33,15 @@
 </template>
 
 <script>
-// import appBar from '../components/appBar.vue';
+import db from '@/plugins/leancloud';
 
 export default {
-  components: {
-    // appBar,
-  },
+  components: {},
   props: ['userName'],
   name: 'admin',
   data() {
     return {
+      user: null,
       links: [
         {
           title: '知乎',
@@ -64,6 +61,13 @@ export default {
     parblicLink() {
       return `https://www.parblic.com/${this.userName}`;
     },
+    avatar() {
+      let avatar = 'require("@/assets/logo.png")';
+      if (this.user && this.user.avatar) {
+        avatar = this.user.avatar;
+      }
+      return avatar;
+    },
   },
   methods: {
     open(url) {
@@ -74,6 +78,20 @@ export default {
       }
       window.open(u, '_blank');
     },
+  },
+  async created() {
+    const username = this.userName;
+    const User = new db.Query('_User');
+    User.equalTo('username', username);
+    const [user] = await User.find();
+    console.log(user.toJSON());
+    this.user = user.toJSON();
+    const Links = new db.Query('links');
+    Links.equalTo('dependent', user);
+    const resp = await Links.find();
+    console.log(resp);
+    const [l] = resp;
+    this.links = l.toJSON().links;
   },
 };
 </script>
