@@ -1,44 +1,46 @@
 <template>
-  <v-card>
-    <v-snackbar v-model="snackbar" bottom :timeout="2000">
-      {{ msg }}
-    </v-snackbar>
-    <v-card-text>
-      <v-row class="d-flex justify-start">
-        <v-col class="12" md="2">
-          <v-avatar v-if="avatar != ''" size="130">
-            <v-img :src="avatar" class="align-center"></v-img>
-          </v-avatar>
-          <v-avatar v-else size="130">
-            <v-img
-              src="https://file.munshare.com/468c1828a0c637b75153.png/lingyanglogo.png"
-              class="align-end"
-            ></v-img>
-          </v-avatar>
-          <v-file-input
-            class="ml-13 pt-0 mt-0"
-            v-model="selectedAvatar"
-            prepend-icon="mdi-camera"
-            accept="image/*"
-            hide-input
-            :rules="avatarRules"
-          ></v-file-input>
-          <v-btn
-            small
-            color="primary"
-            class="pa-1 ml-8"
-            :loading="avatarUploading"
-            @click="onUploadAvatar()"
-            >保存头像</v-btn
-          >
-        </v-col>
-        <v-col class="12" md="10">
-          <p>用户名: {{ userName }}</p>
-          <p>邮箱: {{ email }}</p>
-        </v-col>
-      </v-row>
-    </v-card-text>
-  </v-card>
+  <v-container grid-list-xs>
+    <v-card>
+      <v-snackbar v-model="snackbar" bottom :timeout="2000">
+        {{ msg }}
+      </v-snackbar>
+      <v-card-text>
+        <v-row class="d-flex justify-start">
+          <v-col class="12" md="2">
+            <v-avatar v-if="avatar != ''" size="130">
+              <v-img :src="avatar" class="align-center"></v-img>
+            </v-avatar>
+            <v-avatar v-else size="130">
+              <v-img
+                src="https://file.munshare.com/468c1828a0c637b75153.png/lingyanglogo.png"
+                class="align-end"
+              ></v-img>
+            </v-avatar>
+            <v-file-input
+              class="ml-13 pt-0 mt-0"
+              v-model="selectedAvatar"
+              prepend-icon="mdi-camera"
+              accept="image/*"
+              hide-input
+              :rules="avatarRules"
+            ></v-file-input>
+            <v-btn
+              small
+              color="primary"
+              class="pa-1 ml-8"
+              :loading="avatarUploading"
+              @click="onUploadAvatar()"
+              >保存头像</v-btn
+            >
+          </v-col>
+          <v-col class="12" md="10">
+            <p>用户名: {{ userName }}</p>
+            <p>邮箱: {{ email }}</p>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+  </v-container>
 </template>
 
 <script>

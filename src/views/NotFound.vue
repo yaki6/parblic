@@ -5,7 +5,7 @@
         <v-sheet height="300"> </v-sheet>
         <v-row justify="center">
           <v-col justify-center cols="12" md="6" class="text-center">
-            <span class="text-h3">Parblic</span>
+            <p class="text-h3 purple--text">Parblic</p>
             <p class="headline mt-12">抱歉，没有找到你想要的</p>
             <v-btn text color="primary" to="/">返回首页</v-btn>
           </v-col>

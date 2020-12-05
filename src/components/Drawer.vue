@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="drawerState" app clipped width="160">
+  <v-navigation-drawer app v-model="drawerState">
     <v-list dense>
       <v-list-item-group color="primary">
         <v-list-item
@@ -33,7 +33,7 @@ export default {
   data: () => ({
     a_links: [
       {
-        to: '/admin',
+        to: '/admin/links',
         icon: 'mdi-link-plus',
         text: '管理链接',
       },

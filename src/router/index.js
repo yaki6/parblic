@@ -10,13 +10,6 @@ const routes = [
     name: 'Home',
     component: () => import(/* webpackChunkName: "Home" */ '../views/Home.vue'),
   },
-
-  {
-    path: '/test',
-    name: 'test',
-    component: () => import('../views/parblic.vue'),
-  },
-
   {
     path: '/register',
     name: 'register',
@@ -36,11 +29,10 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
   {
-    path: '/admin/',
+    path: '/admin',
     meta: {
       requiresAuth: true,
     },
-    redirect: '/admin/links',
     name: 'admin',
     component: () => import(/* webpackChunkName: "adminView" */ '../views/adminView.vue'),
     children: [

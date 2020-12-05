@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app clipped-left flat>
+    <v-app-bar app>
       <v-app-bar-nav-icon icon @click="toggle"></v-app-bar-nav-icon>
       <v-toolbar-title to="/">Parblic</v-toolbar-title>
       <v-spacer></v-spacer>

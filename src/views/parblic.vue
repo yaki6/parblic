@@ -20,6 +20,7 @@
                 block
                 rounded
                 x-large
+                v-if="item.alive"
                 @click="open(item.link)"
               >
                 {{ item.title }}

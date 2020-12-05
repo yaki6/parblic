@@ -59,7 +59,10 @@
                         v-model="item.link"
                       ></v-text-field>
                       <div class="d-flex justify-end align-center">
+                        <span v-if="item.alive"> 展示链接 </span>
+                        <span v-else> 隐藏链接 </span>
                         <v-switch
+                          class="ml-1"
                           inset
                           dense
                           v-model="item.alive"
@@ -154,7 +157,7 @@ export default {
   // },
   methods: {
     add() {
-      this.links.unshift({ title: ' ', link: '' });
+      this.links.unshift({ title: ' ', link: '', alive: true });
     },
     removeAt(idx) {
       this.links.splice(idx, 1);
@@ -174,31 +177,6 @@ export default {
           this.color = 'error';
         });
     },
-    // updateLinks: debounce(async function (value) {
-    //   if (!value) {
-    //     console.log('empty');
-    //   }
-    //   // Items have already been requested
-    //   if (this.updating) {
-    //     return;
-    //   }
-    //   this.updating = true;
-    //   // YOUR AJAX Methods go here
-    //   this.linkObj
-    //     .set('links', value)
-    //     .save()
-    //     .then((resp) => {
-    //       console.log(resp);
-    //       this.links = resp;
-    //       this.updating = false;
-    //     })
-    //     .catch(() => {
-    //       console.log('Unknown Error. Please check details and try again.');
-    //     })
-    //     .finally(() => {
-    //       this.updating = false;
-    //     });
-    // }, 5000),
     copy() {
       const textArea = document.createElement('textarea');
       textArea.value = this.parblicLink;
@@ -206,11 +184,9 @@ export default {
       textArea.style.top = '0';
       textArea.style.left = '0';
       textArea.style.position = 'fixed';
-
       document.body.appendChild(textArea);
       textArea.focus();
       textArea.select();
-
       try {
         const successful = document.execCommand('copy');
         if (successful) {
