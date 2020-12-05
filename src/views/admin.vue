@@ -129,7 +129,6 @@ export default {
       snackbar: false,
       msg: '',
       qrDialog: false,
-      userName: 'yaki',
       links: [
         {
           title: '',
@@ -141,9 +140,12 @@ export default {
     };
   },
   computed: {
+    userName() {
+      return this.$store.state.base.user.username;
+    },
     parblicLink() {
-      // const url = window.location.href;
-      const url = 'https://parblic.munshare.com';
+      const url = window.location.href;
+      // const url = 'https://parblic.munshare.com';
       const host = url.match(/^.+?[^/:](?=[?/]|$)/)[0];
       return `${host}/${this.userName}`;
     },
