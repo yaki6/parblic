@@ -64,6 +64,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "Home" */ '../views/parblic.vue'),
   },
   {
+    path: '/404',
+    name: '404',
+    component: () => import('../views/NotFound.vue'),
+  },
+  {
     path: '*',
     name: 'notFound',
     component: () => import('../views/NotFound.vue'),

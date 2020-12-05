@@ -42,18 +42,7 @@ export default {
   data() {
     return {
       user: null,
-      links: [
-        {
-          title: '知乎',
-          link: 'www.zhihu.com',
-          alive: true,
-        },
-        {
-          title: 'baidu',
-          link: 'https://baidu.com',
-          alive: false,
-        },
-      ],
+      links: [],
       urlRules: [(v) => !!v || '请输入链接'],
     };
   },
@@ -84,14 +73,17 @@ export default {
     const User = new db.Query('_User');
     User.equalTo('username', username);
     const [user] = await User.find();
-    console.log(user.toJSON());
-    this.user = user.toJSON();
-    const Links = new db.Query('links');
-    Links.equalTo('dependent', user);
-    const resp = await Links.find();
-    console.log(resp);
-    const [l] = resp;
-    this.links = l.toJSON().links;
+    if (!user) {
+      this.$router.push({ name: '404' });
+    } else {
+      this.user = user.toJSON();
+      const Links = new db.Query('links');
+      Links.equalTo('dependent', user);
+      const resp = await Links.find();
+      console.log(resp);
+      const [l] = resp;
+      this.links = l.toJSON().links;
+    }
   },
 };
 </script>
