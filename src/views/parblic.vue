@@ -39,6 +39,11 @@ import db from '@/plugins/leancloud';
 export default {
   components: {},
   props: ['userName'],
+  metaInfo() {
+    return {
+      title: `@${this.userName}`,
+    };
+  },
   name: 'admin',
   data() {
     return {

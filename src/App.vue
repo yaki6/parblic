@@ -8,6 +8,12 @@
 
 <script>
 export default {
+  metaInfo() {
+    return {
+      title: '一键链接',
+      titleTemplate: '%s | Parblink',
+    };
+  },
   name: 'App',
   components: {},
 

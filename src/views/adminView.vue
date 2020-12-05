@@ -20,6 +20,11 @@ import Drawer from '../components/Drawer.vue';
 export default {
   components: { Drawer },
   name: 'adminView',
+  metaInfo() {
+    return {
+      title: '管理中心',
+    };
+  },
   data() {
     return {};
   },

@@ -3,7 +3,7 @@
     <div class="text-h5 purple--text">Parblic</div>
     <v-spacer></v-spacer>
     <div v-if="isLoggedin">
-      <v-btn color="primary" to="/admin">
+      <v-btn color="primary" to="/admin/links">
         <v-icon>mdi-account</v-icon>
         管理面板</v-btn
       >
