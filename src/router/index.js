@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import db from '@/plugins/leancloud';
 
 Vue.use(VueRouter);
 
@@ -36,6 +37,9 @@ const routes = [
   },
   {
     path: '/admin/',
+    meta: {
+      requiresAuth: true,
+    },
     redirect: '/admin/links',
     name: 'admin',
     component: () => import(/* webpackChunkName: "adminView" */ '../views/adminView.vue'),
@@ -79,6 +83,20 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+
+// Route guard checks to see if you are logged in, if not reroutes to login
+// to is where you are going, matched.some is to find which routes have requiresAuth
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (db.User.current() !== null) {
+      next();
+    } else {
+      next('/login');
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;
