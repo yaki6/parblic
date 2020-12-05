@@ -98,7 +98,7 @@ export default {
           .dispatch('base/login', data)
           .then(() => {
             this.loading = false;
-            this.$router.push('/admin');
+            this.$router.push('/admin/links');
           })
           .catch((err) => {
             this.loading = false;

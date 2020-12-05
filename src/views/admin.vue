@@ -132,13 +132,8 @@ export default {
       userName: 'yaki',
       links: [
         {
-          title: '知乎',
-          link: 'fasdfa',
-          alive: true,
-        },
-        {
-          title: 'baidu',
-          link: 'asdf',
+          title: '',
+          link: '',
           alive: false,
         },
       ],
@@ -147,7 +142,10 @@ export default {
   },
   computed: {
     parblicLink() {
-      return `https://www.parblic.com/${this.userName}`;
+      // const url = window.location.href;
+      const url = 'https://parblic.munshare.com';
+      const host = url.match(/^.+?[^/:](?=[?/]|$)/)[0];
+      return `${host}/${this.userName}`;
     },
   },
   // watch: {

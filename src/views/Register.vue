@@ -147,6 +147,7 @@ export default {
                 .dispatch('base/login', data)
                 .then(() => {
                   // this.$router.push('/welcome');
+                  this.$router.push('/admin/links');
                 })
                 .catch((err) => {
                   this.msg = `${err}，请联系我们`;

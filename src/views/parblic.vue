@@ -48,9 +48,6 @@ export default {
     };
   },
   computed: {
-    parblicLink() {
-      return `https://www.parblic.com/${this.userName}`;
-    },
     avatar() {
       let avatar = 'require("@/assets/logo.png")';
       if (this.user && this.user.avatar) {

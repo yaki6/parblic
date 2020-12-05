@@ -70,9 +70,6 @@ export default {
     },
   },
   computed: {
-    parblicLink() {
-      return `https://www.parblic.com/${this.userName}`;
-    },
     userName() {
       return this.$store.state.base.user.username;
     },

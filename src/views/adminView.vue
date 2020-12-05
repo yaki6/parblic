@@ -25,9 +25,6 @@ export default {
   },
   computed: {
     ...mapState('base', ['drawer']),
-    parblicLink() {
-      return `https://www.parblic.com/${this.userName}`;
-    },
   },
   methods: {
     ...mapMutations('base', ['toggleDrawer']),

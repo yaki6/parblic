@@ -72,7 +72,7 @@ export default {
       loading: false,
       valid: true,
       industry: [],
-      industries: ['电商', '演员', '短视频'],
+      industries: ['电商', '时尚行业', '短视频'],
       requiredRule: [(v) => !!v || '请填写姓名'],
       yearRules: [
         (v) => /^[0-9]{4}$/.test(v) || '请输入合适的日期格式，如2019',
