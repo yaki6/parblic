@@ -23,7 +23,7 @@
             </h1>
             <br />
             <h3 class="text-center headline accent--text" style="color: white">
-              你的全部社交账号，只需一个入口
+              你的全部社交内容和商铺，需要一个入口
             </h3>
             <br />
             <v-row class="justify-center align-center">
@@ -33,6 +33,37 @@
                 >
               </v-col>
             </v-row>
+          </v-col>
+        </v-row>
+      </v-container>
+      <v-container grid-list-xs>
+        <v-row align="center" justify="center">
+          <v-col cols="5">
+            <v-img
+              width="100%"
+              :src="require('@/assets/svg/share_link.svg')"
+            ></v-img>
+          </v-col>
+        </v-row>
+        <v-row align="center" justify="center">
+          <v-col cols="6">
+            <div class="text-h3">把你的Parblic链接放到所有地方</div>
+            <div class="text-h4">
+              不管是公众号，短视频，还是商铺； <br />
+              在所有地方使用你的Parblic链接，让粉丝发现最重要的内容
+            </div>
+          </v-col>
+          <v-col cols="6">
+            <div class="text-h3">链接到任何地方</div>
+            <div class="text-h4">
+              你的视频，文章，网站，店铺，社交网络，Parblic是你线上全平台内容的入口。
+            </div>
+          </v-col>
+          <v-col cols="6">
+            <div class="text-h3">轻松管理并监控</div>
+            <div class="text-h4">
+              几秒内创建你的链接，轻松管理并查看你的链接点击情况
+            </div>
           </v-col>
         </v-row>
       </v-container>
