@@ -38,32 +38,42 @@
       </v-container>
       <v-container grid-list-xs>
         <v-row align="center" justify="center">
-          <v-col cols="5">
+          <v-col cols="6">
             <v-img
-              width="100%"
+              width="70%"
               :src="require('@/assets/svg/share_link.svg')"
             ></v-img>
+          </v-col>
+          <v-col cols="6">
+            <div class="text-h5">把你的Parblic链接放到所有地方</div>
+            <div class="text-h6">
+              不管是个人主页，公众号，社交媒体<br />
+              在所有地方使用你的Parblic链接，让关注者和粉丝发现你最重要的内容
+            </div>
           </v-col>
         </v-row>
         <v-row align="center" justify="center">
           <v-col cols="6">
-            <div class="text-h3">把你的Parblic链接放到所有地方</div>
-            <div class="text-h4">
-              不管是公众号，短视频，还是商铺； <br />
-              在所有地方使用你的Parblic链接，让粉丝发现最重要的内容
+            <div class="text-h5">链接到任何地方</div>
+            <div class="text-h6">
+              你的视频，文章，网站，店铺，Parblic是你线上全平台内容的一键入口。
             </div>
           </v-col>
           <v-col cols="6">
-            <div class="text-h3">链接到任何地方</div>
-            <div class="text-h4">
-              你的视频，文章，网站，店铺，社交网络，Parblic是你线上全平台内容的入口。
-            </div>
+            <v-img
+              width="70%"
+              :src="require('@/assets/svg/social_media.svg')"
+            ></v-img>
           </v-col>
           <v-col cols="6">
-            <div class="text-h3">轻松管理并监控</div>
-            <div class="text-h4">
-              几秒内创建你的链接，轻松管理并查看你的链接点击情况
-            </div>
+            <v-img
+              width="70%"
+              :src="require('@/assets/svg/note_list.svg')"
+            ></v-img>
+          </v-col>
+          <v-col cols="6">
+            <div class="text-h5">轻松管理你的链接</div>
+            <div class="text-h7">几秒内创建你的链接，轻松管理拖动你的链接</div>
           </v-col>
         </v-row>
       </v-container>

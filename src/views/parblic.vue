@@ -30,6 +30,11 @@
         </div>
       </v-container>
     </v-main>
+    <div id="footer">
+      <v-row justify="center" align="center">
+        <v-btn text to="/">创建你的主页</v-btn>
+      </v-row>
+    </div>
   </v-app>
 </template>
 
@@ -92,4 +97,10 @@ export default {
 </script>
 
 <style scoped>
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+}
 </style>
