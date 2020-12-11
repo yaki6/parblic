@@ -1,6 +1,6 @@
 <template>
   <v-app-bar app flat color="white">
-    <div class="text-h5 purple--text">Parblic</div>
+    <div class="text-h5 purple--text">POMO</div>
     <v-spacer></v-spacer>
     <div v-if="isLoggedin">
       <v-btn color="primary" to="/admin/links">

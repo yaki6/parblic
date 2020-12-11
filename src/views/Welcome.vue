@@ -9,7 +9,7 @@
           <v-col cols="12" sm="8" md="4">
             <v-card elevation="0" align="center" color="#F9F5F1">
               <v-card-title class="justify-center text-h4"
-                >欢迎来到Parblic</v-card-title
+                >欢迎来到POMO</v-card-title
               >
               <div class="justify-center text-subtitle-1">来介绍一下自己</div>
               <v-card-title primary-title></v-card-title>

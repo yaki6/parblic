@@ -20,7 +20,7 @@
 
     <template v-slot:append>
       <div class="mx-3">
-        <p class="caption grey--text lighten-3">© 2020 Parblic</p>
+        <p class="caption grey--text lighten-3">© 2020 POMO</p>
       </div>
     </template>
   </v-navigation-drawer>

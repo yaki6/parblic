@@ -6,7 +6,7 @@
     <v-container grid-list-xs>
       <v-dialog v-model="qrDialog" width="500">
         <v-card>
-          <v-card-title class="justify-center"> Parblic </v-card-title>
+          <v-card-title class="justify-center"> POMO </v-card-title>
 
           <v-card-text class="text-center">
             {{ parblicLink }}
@@ -80,7 +80,7 @@
           </draggable>
         </v-col>
         <v-col cols="12" md="4" order="first">
-          我的Parblic：
+          我的POMO:
           <a :href="parblicLink" target="_blank">
             {{ parblicLink }}
           </a>
@@ -91,12 +91,12 @@
             <v-list>
               <v-list-item>
                 <v-list-item-title @click="copy"
-                  >复制我的Parblic URL</v-list-item-title
+                  >复制我的POMO URL</v-list-item-title
                 >
               </v-list-item>
               <v-list-item>
                 <v-list-item-title @click="qrDialog = true"
-                  >下载我的Parblic二维码</v-list-item-title
+                  >下载我的POMO二维码</v-list-item-title
                 >
               </v-list-item>
             </v-list>
@@ -145,7 +145,6 @@ export default {
     },
     parblicLink() {
       const url = window.location.href;
-      // const url = 'https://parblic.munshare.com';
       const host = url.match(/^.+?[^/:](?=[?/]|$)/)[0];
       return `${host}/${this.userName}`;
     },

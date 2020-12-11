@@ -9,13 +9,13 @@
       <v-row align="center" justify="center">
         <v-col cols="12" sm="8" md="4">
           <v-card tile align="center">
-            <v-card-title class="justify-center">加入Parblic</v-card-title>
+            <v-card-title class="justify-center">加入POMO</v-card-title>
             <v-card-text>
               <v-form ref="form" v-model="valid" lazy-validation>
                 <v-text-field
                   v-model="username"
                   :rules="usernameRules"
-                  label="Parblic链接使用的用户名"
+                  label="POMO链接中的用户名"
                   prepend-inner-icon="mdi-email"
                   required
                 ></v-text-field>

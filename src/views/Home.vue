@@ -45,10 +45,10 @@
             ></v-img>
           </v-col>
           <v-col cols="6">
-            <div class="text-h5">把你的Parblic链接放到所有地方</div>
+            <div class="text-h5">把你的POMO链接放到所有地方</div>
             <div class="text-h6">
               不管是个人主页，公众号，社交媒体<br />
-              在所有地方使用你的Parblic链接，让关注者和粉丝发现你最重要的内容
+              在所有地方使用你的POMO链接，让关注者和粉丝发现你最重要的内容
             </div>
           </v-col>
         </v-row>
@@ -56,7 +56,7 @@
           <v-col cols="6">
             <div class="text-h5">链接到任何地方</div>
             <div class="text-h6">
-              你的视频，文章，网站，店铺，Parblic是你线上全平台内容的一键入口。
+              你的视频，文章，网站，店铺，POMO是你线上全平台内容的一键入口。
             </div>
           </v-col>
           <v-col cols="6">
