@@ -9,14 +9,9 @@
           <v-card-title class="justify-center"> POMO </v-card-title>
 
           <v-card-text class="text-center">
-            {{ parblicLink }}
+            {{ pomoLink }}
             <br />
-            <vue-qrcode
-              :value="parblicLink"
-              :width="300"
-              :scale="5"
-              :margin="2"
-            />
+            <vue-qrcode :value="pomoLink" :width="300" :scale="5" :margin="2" />
           </v-card-text>
           <v-divider></v-divider>
 
@@ -27,12 +22,40 @@
       </v-dialog>
 
       <v-row justify="center" class="mt-4">
+        <v-col cols="12" md="4" class="order-md-first">
+          我的POMO:
+          <a :href="pomoLink" target="_blank">
+            {{ pomoLink }}
+          </a>
+          <v-menu right>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn v-bind="attrs" v-on="on" color="primary" block>
+                分享
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item>
+                <v-list-item-title @click="copy"
+                  >复制我的POMO URL</v-list-item-title
+                >
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title @click="qrDialog = true"
+                  >下载我的POMO二维码</v-list-item-title
+                >
+              </v-list-item>
+            </v-list>
+          </v-menu>
+          <br />
+        </v-col>
         <v-col cols="12" md="8">
           <v-row>
-            <v-btn class="my-4" color="secondary" @click="save" block
-              >保存
-            </v-btn>
-            <v-btn color="primary" block @click="add">新链接</v-btn>
+            <v-col>
+              <v-btn color="secondary" @click="save" block> 保存 </v-btn>
+            </v-col>
+            <v-col>
+              <v-btn color="secondary" block @click="add">新链接</v-btn>
+            </v-col>
           </v-row>
 
           <draggable
@@ -83,30 +106,6 @@
             </template>
           </draggable>
         </v-col>
-        <v-col cols="12" md="4" class="order-sm-first">
-          我的POMO:
-          <a :href="parblicLink" target="_blank">
-            {{ parblicLink }}
-          </a>
-          <v-menu right>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn v-bind="attrs" v-on="on" color="primary"> 分享 </v-btn>
-            </template>
-            <v-list>
-              <v-list-item>
-                <v-list-item-title @click="copy"
-                  >复制我的POMO URL</v-list-item-title
-                >
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-title @click="qrDialog = true"
-                  >下载我的POMO二维码</v-list-item-title
-                >
-              </v-list-item>
-            </v-list>
-          </v-menu>
-          <br />
-        </v-col>
       </v-row>
     </v-container>
   </div>
@@ -146,18 +145,13 @@ export default {
     userName() {
       return this.$store.state.base.user.username;
     },
-    parblicLink() {
+    pomoLink() {
       const url = window.location.href;
       // const url = 'https://parblic.munshare.com';
       const host = url.match(/^.+?[^/:](?=[?/]|$)/)[0];
       return `${host}/${this.userName}`;
     },
   },
-  // watch: {
-  //   links(val) {
-  //     this.updateLinks(val);
-  //   },
-  // },
   methods: {
     add() {
       this.links.unshift({ title: ' ', link: '', alive: true });
@@ -182,7 +176,7 @@ export default {
     },
     copy() {
       const textArea = document.createElement('textarea');
-      textArea.value = this.parblicLink;
+      textArea.value = this.pomoLink;
       // Avoid scrolling to bottom
       textArea.style.top = '0';
       textArea.style.left = '0';
@@ -206,7 +200,6 @@ export default {
       const imageSrc = document.getElementsByTagName('img')[0].currentSrc;
       // const image = new Image();
       // image.src = imageSrc;
-      console.log(imageSrc);
       const anchor = document.createElement('a');
       anchor.href = imageSrc;
       anchor.target = '_blank';
@@ -220,7 +213,6 @@ export default {
       .equalTo('dependent', db.User.current())
       .find()
       .then((resp) => {
-        console.log(resp);
         if (resp.length === 0) {
           const L = db.Object.extend('links');
           const l = new L();
@@ -237,7 +229,6 @@ export default {
           l.save().then((r) => console.log(r));
         } else {
           const [linkObj] = resp;
-          console.log(linkObj);
           this.linkObj = linkObj;
           this.links = linkObj.toJSON().links;
         }

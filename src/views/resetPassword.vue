@@ -20,7 +20,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-btn
-                  color="success"
+                  color="primary"
                   @click="resetPassword"
                   :loading="submitting"
                   :disabled="submitting"
@@ -52,11 +52,10 @@ export default {
     resetPassword() {
       this.submitting = true;
       db.User.requestPasswordReset(this.email)
-        .then((resp) => {
-          console.log('then');
-          console.log(resp);
+        .then(() => {
           this.snackbar = true;
           this.msg = '请查看邮箱重置密码';
+          this.$router.push('/login');
         })
         .catch((e) => {
           this.snackbar = true;

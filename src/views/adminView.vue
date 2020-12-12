@@ -34,7 +34,6 @@ export default {
   methods: {
     ...mapMutations('base', ['toggleDrawer']),
     toggle() {
-      console.log(!this.drawer);
       this.toggleDrawer(!this.drawer);
     },
     logout() {

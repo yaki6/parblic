@@ -15,7 +15,7 @@
                 <v-text-field
                   v-model="username"
                   :rules="usernameRules"
-                  label="POMO链接中的用户名"
+                  label="POMO链接中使用的用户名"
                   prepend-inner-icon="mdi-email"
                   required
                 ></v-text-field>
@@ -157,7 +157,6 @@ export default {
             }, 500);
           })
           .catch((err) => {
-            console.log(err.code);
             if (err.code === 202) {
               this.msg = '用户名已被使用';
               this.alert = true;

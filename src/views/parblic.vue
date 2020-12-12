@@ -68,7 +68,6 @@ export default {
   },
   methods: {
     open(url) {
-      console.log(url);
       let u = url;
       if (!u.match(/^https?:\/\//i)) {
         u = `http://${u}`;
@@ -88,7 +87,6 @@ export default {
       const Links = new db.Query('links');
       Links.equalTo('dependent', user);
       const resp = await Links.find();
-      console.log(resp);
       const [l] = resp;
       this.links = l.toJSON().links;
     }
