@@ -143,7 +143,8 @@ export default {
   },
   computed: {
     userName() {
-      return this.$store.state.base.user.username;
+      const user = JSON.parse(JSON.stringify(this.$store.state.base.user));
+      return user.username;
     },
     pomoLink() {
       const url = window.location.href;

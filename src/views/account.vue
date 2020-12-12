@@ -71,10 +71,12 @@ export default {
   },
   computed: {
     userName() {
-      return this.$store.state.base.user.username;
+      const user = JSON.parse(JSON.stringify(this.$store.state.base.user));
+      return user.username;
     },
     email() {
-      return this.$store.state.base.user.email;
+      const user = JSON.parse(JSON.stringify(this.$store.state.base.user));
+      return user.email;
     },
   },
   methods: {
