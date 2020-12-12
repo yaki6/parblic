@@ -11,7 +11,7 @@ export default {
   metaInfo() {
     return {
       title: '一键链接',
-      titleTemplate: '%s | Parblink',
+      titleTemplate: '%s | POMO',
     };
   },
   name: 'App',

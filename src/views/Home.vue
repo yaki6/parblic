@@ -23,7 +23,7 @@
             </h1>
             <br />
             <h3 class="text-center headline accent--text" style="color: white">
-              你的全部社交内容和商铺，需要一个入口
+              你的全部内容和商铺，需要一个入口
             </h3>
             <br />
             <v-row class="justify-center align-center">
@@ -37,43 +37,57 @@
         </v-row>
       </v-container>
       <v-container grid-list-xs>
-        <v-row align="center" justify="center">
-          <v-col cols="6">
+        <v-row align="center" class="my-6">
+          <v-col cols="12" md="6" align="center">
             <v-img
               width="70%"
               :src="require('@/assets/svg/share_link.svg')"
             ></v-img>
           </v-col>
-          <v-col cols="6">
-            <div class="text-h5">把你的POMO链接放到所有地方</div>
-            <div class="text-h6">
+          <v-col cols="12" md="6" align="center">
+            <div class="text-h5">把POMO链接放到所有地方</div>
+            <div class="text-h7">
               不管是个人主页，公众号，社交媒体<br />
               在所有地方使用你的POMO链接，让关注者和粉丝发现你最重要的内容
             </div>
           </v-col>
         </v-row>
-        <v-row align="center" justify="center">
-          <v-col cols="6">
-            <div class="text-h5">链接到任何地方</div>
-            <div class="text-h6">
-              你的视频，文章，网站，店铺，POMO是你线上全平台内容的一键入口。
-            </div>
-          </v-col>
-          <v-col cols="6">
+        <v-row align="center" class="my-6">
+          <v-col cols="12" md="6" class="order-md-last" align="center">
             <v-img
               width="70%"
               :src="require('@/assets/svg/social_media.svg')"
             ></v-img>
           </v-col>
-          <v-col cols="6">
+          <v-col cols="12" md="6" align="center">
+            <div class="text-h5">链接到任何地方</div>
+            <div class="text-h7">
+              你的视频，文章，网站，店铺
+              <br />
+              POMO是你线上全部内容的一键入口
+            </div>
+          </v-col>
+        </v-row>
+        <v-row align="center" class="my-6">
+          <v-col cols="12" md="6" align="center">
             <v-img
               width="70%"
               :src="require('@/assets/svg/note_list.svg')"
             ></v-img>
           </v-col>
-          <v-col cols="6">
+          <v-col cols="12" md="6" align="center">
             <div class="text-h5">轻松管理你的链接</div>
-            <div class="text-h7">几秒内创建你的链接，轻松管理拖动你的链接</div>
+            <div class="text-h7">
+              几秒内创建你的链接，轻松拖动管理 <br />
+              现在就分享你的POMO链接或二维码
+            </div>
+          </v-col>
+        </v-row>
+        <v-row align="center" justify="center">
+          <v-col cols="12" md="6" align="center">
+            <v-btn to="/register" color="primary lighten-1" x-large
+              >免费开始</v-btn
+            >
           </v-col>
         </v-row>
       </v-container>
