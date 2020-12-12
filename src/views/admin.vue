@@ -26,11 +26,15 @@
         </v-card>
       </v-dialog>
 
-      <v-row>
-        <v-btn color="primary" block @click="add">新链接</v-btn>
-      </v-row>
       <v-row justify="center" class="mt-4">
         <v-col cols="12" md="8">
+          <v-row>
+            <v-btn class="my-4" color="secondary" @click="save" block
+              >保存
+            </v-btn>
+            <v-btn color="primary" block @click="add">新链接</v-btn>
+          </v-row>
+
           <draggable
             :list="links"
             handle=".handle"
@@ -79,14 +83,14 @@
             </template>
           </draggable>
         </v-col>
-        <v-col cols="12" md="4" order="first">
+        <v-col cols="12" md="4" class="order-sm-first">
           我的POMO:
           <a :href="parblicLink" target="_blank">
             {{ parblicLink }}
           </a>
           <v-menu right>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn outlined v-bind="attrs" v-on="on"> 分享 </v-btn>
+              <v-btn v-bind="attrs" v-on="on" color="primary"> 分享 </v-btn>
             </template>
             <v-list>
               <v-list-item>
@@ -102,7 +106,6 @@
             </v-list>
           </v-menu>
           <br />
-          <v-btn class="my-4" color="primary" @click="save">保存</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -145,6 +148,7 @@ export default {
     },
     parblicLink() {
       const url = window.location.href;
+      // const url = 'https://parblic.munshare.com';
       const host = url.match(/^.+?[^/:](?=[?/]|$)/)[0];
       return `${host}/${this.userName}`;
     },

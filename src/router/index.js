@@ -49,6 +49,22 @@ const routes = [
     ],
   },
   {
+    path: '/resetpassword',
+    component: () => import('../views/resetPassword.vue'),
+  },
+  {
+    path: '/privacy',
+    component: () => import('../views/privacy.vue'),
+  },
+  {
+    path: '/faq',
+    component: () => import('../views/faq.vue'),
+  },
+  {
+    path: '/agreement',
+    component: () => import('../views/agreement.vue'),
+  },
+  {
     path: '/Welcome',
     name: 'Welcome',
     component: () => import(/* webpackChunkName: "Welcome" */ '../views/Welcome.vue'),

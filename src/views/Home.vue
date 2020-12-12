@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <v-app>
     <app-bar></app-bar>
-    <div class="align-center" style="height: 500px">
+    <v-main>
       <v-container grid-list-xs fill-height fluid>
         <v-row>
           <v-col>
@@ -35,8 +35,6 @@
             </v-row>
           </v-col>
         </v-row>
-      </v-container>
-      <v-container grid-list-xs>
         <v-row align="center" class="my-6">
           <v-col cols="12" md="6" align="center">
             <v-img
@@ -91,17 +89,20 @@
           </v-col>
         </v-row>
       </v-container>
-    </div>
-  </div>
+    </v-main>
+   <Footer></Footer>
+  </v-app>
 </template>
 
 <script>
 import appBar from '../components/appBar.vue';
+import Footer from '../components/Footer.vue';
 
 export default {
   name: 'about',
   components: {
     appBar,
+    Footer,
   },
   data() {
     return {};
