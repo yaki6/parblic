@@ -11,7 +11,10 @@
               </v-avatar>
             </v-row>
             <v-row justify="center">
-              <p class="text-h6">@{{ userName }}</p>
+              <div class="text-center">
+                <p class="text-h6">@{{ userName }}</p>
+                <p class="text-subtitle-2">{{ intro }}</p>
+              </div>
             </v-row>
             <v-row v-for="(item, i) in links" :key="i">
               <v-btn
@@ -32,7 +35,7 @@
     </v-main>
     <div id="footer">
       <v-row justify="center" align="center">
-        <v-btn text to="/">创建你的主页</v-btn>
+        <v-btn class="primary--text" text to="/">创建你的主页</v-btn>
       </v-row>
     </div>
   </v-app>
@@ -64,6 +67,9 @@ export default {
         avatar = this.user.avatar;
       }
       return avatar;
+    },
+    intro() {
+      return this.user.intro;
     },
   },
   methods: {

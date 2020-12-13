@@ -71,9 +71,9 @@ const routes = [
   },
   {
     path: '/:userName',
-    name: 'parblic',
+    name: 'homepage',
     props: true,
-    component: () => import(/* webpackChunkName: "Home" */ '../views/parblic.vue'),
+    component: () => import(/* webpackChunkName: "Home" */ '../views/homepage.vue'),
   },
   {
     path: '/404',

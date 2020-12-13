@@ -6,7 +6,7 @@
       </v-snackbar>
       <v-card-text>
         <v-row class="d-flex justify-start">
-          <v-col class="12" md="2">
+          <v-col class="12" md="2" cols="12">
             <v-avatar v-if="avatar != ''" size="130">
               <v-img :src="avatar" class="align-center"></v-img>
             </v-avatar>
@@ -36,6 +36,26 @@
           <v-col class="12" md="10">
             <p>用户名: {{ userName }}</p>
             <p>邮箱: {{ email }}</p>
+            <v-form v-model="valid" ref="form">
+              <div>
+                <v-textarea
+                  outlined
+                  dense
+                  label="介绍"
+                  v-model="intro"
+                  rows="2"
+                  hint="在这里简单介绍下你的品牌"
+                  :rules="limitRule"
+                ></v-textarea>
+              </div>
+              <v-btn
+                color="primary"
+                @click="saveIntro"
+                :loading="loadingIntro"
+                :disabled="loadingIntro || !valid"
+                >保存</v-btn
+              >
+            </v-form>
           </v-col>
         </v-row>
       </v-card-text>
@@ -44,19 +64,25 @@
 </template>
 
 <script>
+import db from '@/plugins/leancloud';
+
 export default {
   components: {},
   name: 'account',
   data() {
     return {
+      valid: true,
       snackbar: false,
       msg: '',
       avatar: '',
+      intro: '',
       selectedAvatar: null,
       avatarUploading: false,
+      loadingIntro: false,
       avatarRules: [
         (v) => (v && v.size < 1000000) || '请上传少于1MB的头像图片',
       ],
+      limitRule: [(v) => v.length < 30 || '请输入少于30字'],
     };
   },
   watch: {
@@ -80,6 +106,26 @@ export default {
     },
   },
   methods: {
+    saveIntro() {
+      this.loadingIntro = true;
+      if (this.$refs.form.validate()) {
+        const user = db.User.current();
+        user
+          .set('intro', this.intro)
+          .save()
+          .then(() => {
+            this.msg = '保存成功';
+            this.snackbar = true;
+          })
+          .catch((e) => {
+            this.msg = e;
+            this.snackbar = true;
+          })
+          .finally(() => {
+            this.loadingIntro = false;
+          });
+      }
+    },
     onUploadAvatar() {
       this.avatarUploading = true;
       const image = this.selectedAvatar;
@@ -92,16 +138,17 @@ export default {
           this.msg = '头像更新成功';
         })
         .catch((err) => {
-          this.loadingAvatar = false;
+          this.avatarUploading = false;
           this.snackbar = true;
           this.msg = `${err}请联系我们`;
         });
     },
   },
   created() {
-    const { avatar } = this.$store.state.base.user;
-    if (avatar) {
-      this.avatar = avatar;
+    const user = JSON.parse(JSON.stringify(this.$store.state.base.user));
+    if (user) {
+      this.avatar = user.avatar;
+      this.intro = user.intro;
     }
   },
 };
