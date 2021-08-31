@@ -1,5 +1,14 @@
 # parblic
 
+Parblic is a personal link website to showcase your portfolios made with Vuetify.js
+
+Features included:
+
+- User registration/login
+- CRUD personal portfolio links
+- Drag and adjust the orders 
+- Beautiful showcase interfaces
+
 ## Project setup
 ```
 npm install
